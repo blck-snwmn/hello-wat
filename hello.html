@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>hello wat</title>
+    <script>
+        WebAssembly.instantiateStreaming(fetch('hello.wasm'))
+            .then(obj => {
+                console.log(obj.instance.exports.adds(2, 2, 2, 2));
+                console.log(obj.instance.exports.adds(1, 2, 3, 4));
+                console.log(obj.instance.exports.adds(10, 20, 33, 4444444));
+            });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
