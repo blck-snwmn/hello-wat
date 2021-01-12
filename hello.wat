@@ -9,4 +9,18 @@
         i32.add
     )
     (export "adds" (func $adds))
+    (func $returnConst(result i32)
+        i32.const 35
+    )
+    (func (export "constAdds")(result i32)
+        call $returnConst
+        call $returnConst
+        call $returnConst
+        call $returnConst
+        call $adds
+        call $returnConst
+        call $returnConst
+        call $returnConst
+        call $adds
+    )
 )
