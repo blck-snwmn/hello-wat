@@ -5,20 +5,38 @@
     <meta charset='utf-8'>
     <title>hello wat</title>
     <script>
-        WebAssembly.instantiateStreaming(fetch('hello.wasm'))
+        let importObj = {
+            console: {
+                log: function (arg) {
+                    // import 
+                    console.log("s-----");
+                    console.log(arg);
+                    console.log("e-----");
+                }
+            },
+            time: {
+                now: function () {
+                    // import 
+                    console.log(new Date());
+                }
+            }
+        }
+        WebAssembly.instantiateStreaming(fetch('hello.wasm'), importObj)
             .then(obj => {
                 console.log(obj.instance.exports.adds(2, 2, 2, 2));
                 console.log(obj.instance.exports.adds(1, 2, 3, 4));
                 console.log(obj.instance.exports.adds(10, 20, 33, 4444444));
 
                 console.log(obj.instance.exports.constAdds());
-            });
 
+                obj.instance.exports.write();
+
+                obj.instance.exports.shownow();
+            });
     </script>
 </head>
 
 <body>
-
 </body>
 
 </html>
