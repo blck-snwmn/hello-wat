@@ -5,6 +5,8 @@
     <meta charset='utf-8'>
     <title>hello wat</title>
     <script>
+        let mem = new WebAssembly.Memory({ initial: 1 });
+
         let importObj = {
             console: {
                 log: function (arg) {
@@ -12,6 +14,11 @@
                     console.log("s-----");
                     console.log(arg);
                     console.log("e-----");
+                },
+                logUsingMem: function (offset, length) {
+                    const bytes = new Uint8Array(mem.buffer, offset, length);
+                    const s = new TextDecoder('utf8').decode(bytes);
+                    console.log(s);
                 }
             },
             time: {
@@ -19,6 +26,9 @@
                     // import 
                     console.log(new Date());
                 }
+            },
+            wasm: {
+                mem: mem,
             }
         }
         WebAssembly.instantiateStreaming(fetch('hello.wasm'), importObj)
@@ -32,6 +42,8 @@
                 obj.instance.exports.write();
 
                 obj.instance.exports.shownow();
+
+                obj.instance.exports.writeString();
             });
     </script>
 </head>
