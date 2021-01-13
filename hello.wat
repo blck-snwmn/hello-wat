@@ -39,8 +39,8 @@
         call $timenow
     )
      (func (export "writeString")
-        i32.const 0
-        i32.const 10
+        i32.const 0 ;; offset
+        i32.const 10 ;; length
         call $writelogUsingMem
     )
 )
